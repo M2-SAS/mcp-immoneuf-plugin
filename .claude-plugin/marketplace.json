@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "m2",
-  "description": "Provides some stuff about real estate.",
+  "description": "Search and compare new-build homes and lands in France from the catalogue of M2's partner developers.",
   "owner": {
     "name": "M2",
     "url": "https://www.m2agent.co"

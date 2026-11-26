@@ -249,6 +249,7 @@ def check_skills(root: Path, report: Report) -> None:
 
 
 def check_assets(root: Path, report: Report) -> None:
+    # Logo paths are relative to the plugin root, which is also the ZIP root: ./assets/logo.png
     manifest = json.loads((root / OPENAI_MANIFEST).read_text(encoding="utf-8")) if (root / OPENAI_MANIFEST).is_file() else {}
     interface = manifest.get("extensions", {}).get("com.openai", {}).get("interface", {})
     for key in ("logo", "composerIcon"):
