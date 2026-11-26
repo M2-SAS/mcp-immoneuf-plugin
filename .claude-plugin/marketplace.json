@@ -1,6 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "m2",
+  "description": "Provides some stuff about real estate.",
   "owner": {
     "name": "M2",
     "url": "https://www.m2agent.co"
