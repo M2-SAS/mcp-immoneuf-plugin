@@ -12,7 +12,7 @@
   "repository": "https://github.com/M2-SAS/mcp-immoneuf-plugin",
   "license": "MIT",
   "keywords": ["real-estate", "new-build", "lands", "immobilier-neuf", "mcp", "promoters"],
-  "icon": "../assets/logo.png",
+  "icon": "./logo.png",
   "supportUrl": "https://www.m2agent.co/faq",
   "privacyPolicyUrl": "https://www.m2agent.co/politique-de-confidentialite",
   "termsOfServiceUrl": "https://www.m2agent.co/conditions-generales"
