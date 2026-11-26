@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "m2",
+  "owner": {
+    "name": "M2",
+    "url": "https://www.m2agent.co"
+  },
+  "plugins": [
+    {
+      "name": "m2immoneuf",
+      "source": "./",
+      "description": "Search and compare new-build homes and lands in France from M2's partner developers: filter, compare, check availability and request a callback."
+    }
+  ]
+}

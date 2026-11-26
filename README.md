@@ -25,7 +25,13 @@ Nothing else leaves the conversation. Reservations and payments are not supporte
 
 ## Install
 
-Once published, install it from the Claude plugin directory. To try this repository locally, clone it and run:
+On Claude Code 2.1.275 or later, install it in one step from this repository's marketplace:
+
+```
+/plugin install m2immoneuf --marketplace M2-SAS/mcp-immoneuf-plugin
+```
+
+To try this repository locally, clone it and run:
 
 ```bash
 claude --plugin-dir .
