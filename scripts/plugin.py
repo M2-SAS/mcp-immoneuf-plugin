@@ -19,7 +19,8 @@ import sys
 import zipfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+REPOSITORY = Path(__file__).resolve().parent.parent
+ROOT = REPOSITORY / "plugin"
 
 CLAUDE_MANIFEST = ".claude-plugin/plugin.json"
 OPENAI_MANIFEST = "openai/plugin.json"
@@ -120,7 +121,7 @@ def check_manifest(root: Path, report: Report) -> dict | None:
 
 
 def check_readme_and_license(root: Path, manifest: dict | None, report: Report) -> None:
-    readme = root / "README.md"
+    readme = next((d / "README.md" for d in (root, root.parent) if (d / "README.md").is_file()), root / "README.md")
     if not readme.is_file():
         report.block("README missing")
     else:
@@ -128,7 +129,7 @@ def check_readme_and_license(root: Path, manifest: dict | None, report: Report) 
         if len(re.findall(r"\S+", text)) < 40:
             report.block("README too short (at least 40 words outside code blocks)")
 
-    has_license_file = any((root / name).is_file() for name in ("LICENSE", "LICENSE.md", "LICENSE.txt"))
+    has_license_file = any((d / name).is_file() for d in (root, root.parent) for name in ("LICENSE", "LICENSE.md", "LICENSE.txt"))
     if not has_license_file and not (manifest or {}).get("license"):
         report.block("License missing (LICENSE file or 'license' in plugin.json)")
 

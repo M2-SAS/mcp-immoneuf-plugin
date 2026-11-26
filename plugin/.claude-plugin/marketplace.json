@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "m2immoneuf",
-      "source": "./",
+      "source": "./plugin",
       "description": "Search and compare new-build homes and lands in France from M2's partner developers: filter, compare, check availability and request a callback."
     }
   ]

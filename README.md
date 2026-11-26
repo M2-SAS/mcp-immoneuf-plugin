@@ -34,19 +34,21 @@ On Claude Code 2.1.275 or later, install it in one step from this repository's m
 To try this repository locally, clone it and run:
 
 ```bash
-claude --plugin-dir .
+claude --plugin-dir ./plugin
 ```
 
 ## Repository layout
 
 ```
-.claude-plugin/plugin.json   Claude manifest (source of truth for name and version)
-.mcp.json                    Remote MCP server declaration for Claude
-skills/                      Skills shared by Claude and ChatGPT
-assets/logo.png              Logo
-openai/                      plugin.json and mcp.json of the ChatGPT / OpenAI package
-scripts/plugin.py            Local pre-submission check and ZIP builder (Python 3, standard library only)
-tests/                       Tests of scripts/plugin.py
+.claude-plugin/marketplace.json     Marketplace manifest (lists the plugin, source ./plugin)
+plugin/                             The plugin itself, what Claude installs
+  .claude-plugin/plugin.json        Claude manifest (source of truth for name and version)
+  .mcp.json                         Remote MCP server declaration for Claude
+  skills/                           Skills shared by Claude and ChatGPT
+  assets/logo.png                   Logo
+  openai/                           plugin.json and mcp.json of the ChatGPT / OpenAI package
+scripts/plugin.py                   Local pre-submission check and ZIP builder (Python 3, standard library only)
+tests/                              Tests of scripts/plugin.py
 ```
 
 `scripts/plugin.py` and `tests/` are development tools: they are never loaded by Claude and never part of the ZIP.

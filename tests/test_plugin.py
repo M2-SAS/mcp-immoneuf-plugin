@@ -15,8 +15,9 @@ import plugin  # noqa: E402
 class PluginToolTest(unittest.TestCase):
     def setUp(self) -> None:
         self.workspace = Path(tempfile.mkdtemp())
-        self.root = self.workspace / "plugin"
-        shutil.copytree(REPOSITORY, self.root, ignore=shutil.ignore_patterns(".git", "dist", "__pycache__"))
+        self.repo = self.workspace / "repo"
+        self.root = self.repo / "plugin"
+        shutil.copytree(REPOSITORY, self.repo, ignore=shutil.ignore_patterns(".git", "dist", "__pycache__"))
 
     def tearDown(self) -> None:
         shutil.rmtree(self.workspace)
@@ -88,7 +89,7 @@ class PluginToolTest(unittest.TestCase):
         self.assertTrue(any("README too short" in message for message in self.messages()))
 
     def test_missing_license_blocks(self) -> None:
-        (self.root / "LICENSE").unlink()
+        (self.repo / "LICENSE").unlink()
         self.edit_json(plugin.CLAUDE_MANIFEST, lambda data: data.pop("license"))
 
         self.assertTrue(any("License missing" in message for message in self.messages()))
