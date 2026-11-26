@@ -5,14 +5,14 @@
   "version": "0.2.3",
   "description": "Search and compare new-build homes and lands in France from M2's partner developers: filter, compare, check availability and request a callback.",
   "author": {
-    "name": "M2",
+    "name": "M2 SAS",
     "url": "https://www.m2agent.co"
   },
   "homepage": "https://www.m2agent.co",
   "repository": "https://github.com/M2-SAS/mcp-immoneuf-plugin",
   "license": "MIT",
-  "keywords": ["real-estate", "new-build", "france", "immobilier-neuf", "mcp"],
-  "icon": "./assets/logo.png",
+  "keywords": ["real-estate", "new-build", "lands", "immobilier-neuf", "mcp", "promoters"],
+  "icon": "../assets/logo.png",
   "supportUrl": "https://www.m2agent.co/faq",
   "privacyPolicyUrl": "https://www.m2agent.co/politique-de-confidentialite",
   "termsOfServiceUrl": "https://www.m2agent.co/conditions-generales"

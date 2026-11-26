@@ -22,8 +22,8 @@
                 ],
                 "websiteURL": "https://www.m2agent.co",
                 "supportURL": "https://www.m2agent.co/faq",
-                "logo": "./assets/logo.png",
-                "composerIcon": "./assets/logo.png",
+                "logo": "../assets/logo.png",
+                "composerIcon": "../assets/logo.png",
                 "defaultPrompt": [
                     "Trouve des T2 neufs dans le Val-de-Marne, à partir de 42 m² pour un budget max. de 500 000 €.",
                     "Compare les logements neufs qui sont situés autour de Disney.",
