@@ -1,0 +1,107 @@
+{
+    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "name": "m2immoneuf",
+    "version": "0.2.3",
+    "description": "Search and compare about new-build homes and lands in France. Provide some efficient tools in partnership with promoters to help you to find the best option to make an investment.",
+    "author": {
+        "name": "M2",
+        "url": "https://www.m2agent.co"
+    },
+    "extensions": {
+        "com.openai": {
+            "interface": {
+                "displayName": "M2Immoneuf",
+                "shortDescription": "New-build homes in France",
+                "longDescription": "Search and compare new-build homes from the M2 catalog in France. Filter by location, budget, size, outdoor space or expected delivery date. Open home and development details, check the latest availability reported by the developer, or request a callback from a sales adviser.",
+                "developerName": "M2",
+                "category": "Business & Operations",
+                "capabilities": [
+                    "Interactive",
+                    "Search",
+                    "Comparison"
+                ],
+                "websiteURL": "https://www.m2agent.co",
+                "supportURL": "https://www.m2agent.co/faq",
+                "logo": "./assets/logo.png",
+                "composerIcon": "./assets/logo.png",
+                "defaultPrompt": [
+                    "Trouve des T2 neufs dans le Val-de-Marne, à partir de 42 m² pour un budget max. de 500 000 €.",
+                    "Compare les logements neufs qui sont situés autour de Disney.",
+                    "Vérifie la disponibilité du logement que j'ai repéré à Issy-les-Moulineaux."
+                ],
+                "privacyPolicyURL": "https://www.m2agent.co/politique-de-confidentialite",
+                "termsOfServiceURL": "https://www.m2agent.co/conditions-generales"
+            },
+            "review": {
+                "prompts": [
+                    "Je cherche un T2 neuf dans le 94, à partir de 42 m² et jusqu'à 500 000 €.",
+                    "Compare les lots C01, C02 et C03 du catalogue.",
+                    "Le lot C01 est-il toujours disponible ? De quand date la mise à jour ?"
+                ],
+                "test_cases": {
+                    "positive": [
+                        {
+                            "description": "Recherche filtrée dans une commune. Lancer le cas dans une nouvelle conversation.",
+                            "prompt": "Trouve-moi jusqu'à trois T2 neufs disponibles à Drancy, de 42 m² minimum, pour un budget de 500 000 € maximum.",
+                            "tools_triggered": "search_lots",
+                            "expected_behavior": "Appeler search_lots avec city=Drancy, unit_types=[T2], min_area=42, max_price=500000, limit=3 et include_unavailable=false ou omis. Présenter au plus trois lots disponibles renvoyés, conformes aux critères et triés par prix TTC croissant. Si la recherche revient vide, expliquer le résultat et demander l'accord avant d'élargir les critères."
+                        },
+                        {
+                            "description": "Recherche à l'échelle d'un département, avec sélection d'une ville par l'acquéreur. Lancer le cas dans une nouvelle conversation.",
+                            "prompt": "Dans quelles communes du Val-de-Marne puis-je trouver un T2 neuf d'au moins 42 m² et de 500 000 € maximum ? Je veux choisir la commune avant de voir les lots.",
+                            "tools_triggered": "list_cities",
+                            "expected_behavior": "Appeler list_cities avec departments=[94], unit_types=[T2], min_area=42 et max_price=500000. Présenter uniquement les communes renvoyées du département 94, puis laisser l'acquéreur choisir une commune avant de chercher des lots. Si aucune commune ne correspond, le dire sans modifier les filtres."
+                        },
+                        {
+                            "description": "Fiche d'un logement et de sa résidence.",
+                            "prompt": "Montre-moi la fiche du lot C01 et présente-moi la résidence dont il fait partie.",
+                            "tools_triggered": "get_lot, get_program",
+                            "expected_behavior": "Appeler get_lot avec lot_id=C01, relever program.id, puis appeler get_program avec cet identifiant. Présenter les caractéristiques du lot et les informations de la résidence renvoyées par les outils, en distinguant clairement les deux. Signaler toute donnée manquante."
+                        },
+                        {
+                            "description": "Comparaison de trois lots connus du catalogue. Ouvrir le comparatif sans envoyer de formulaire.",
+                            "prompt": "Compare les lots C01, C02 et C03 dans cet ordre, surtout sur le prix, la surface et l'extérieur.",
+                            "tools_triggered": "compare_lots",
+                            "expected_behavior": "Appeler compare_lots avec lot_ids=[1009,1010,1011], sans recommended_lot_id. Présenter le comparatif dans l'ordre demandé avec les prix TTC, surfaces et extérieurs issus du catalogue. Aucun appel à create_lead."
+                        },
+                        {
+                            "description": "Vérification du statut commercial et de la fraîcheur pour trois lots.",
+                            "prompt": "Vérifie si les lots C01, C02 et C03 sont toujours disponibles. Indique la date de mise à jour pour chacun.",
+                            "tools_triggered": "check_availability",
+                            "expected_behavior": "Appeler check_availability avec lot_ids=[1009,1010,1011]. Pour chaque lot retrouvé, restituer le statut et la date de mise à jour renvoyés. Pour un indice low, indiquer que le statut reste à confirmer. Identifier tout lot introuvable sans inventer son statut. Aucun appel à create_lead."
+                        }
+                    ],
+                    "negative": [
+                        {
+                            "description": "La location de logements anciens est hors périmètre. Aucun outil MCP ne doit être appelé.",
+                            "prompt": "Trouve-moi un T2 ancien à louer à Paris pour 1 500 € par mois."
+                        },
+                        {
+                            "description": "La réservation et le paiement sont hors périmètre. Aucun appel à create_lead ni à un autre outil MCP pour cette demande.",
+                            "prompt": "Réserve le lot C01 immédiatement et encaisse l'acompte ici."
+                        },
+                        {
+                            "description": "Respect du refus de transmission. Aucun appel à create_lead ni envoi du formulaire.",
+                            "prompt": "Je veux savoir comment être rappelé au sujet du lot C01, mais je refuse que tu transmettes mes coordonnées pour le moment."
+                        }
+                    ]
+                },
+                "demo_recording_url": "https://drive.google.com/file/d/19tw_43NwMu3xC3XJlIHfAq7y_3l7VP71/view?usp=sharing",
+                "commerce": false,
+                "commerce_description": "The plugin is free. Users can browse and compare new-build homes and explicitly request a callback from a developer's sales adviser. The plugin does not support subscriptions, reservations, purchases or payments."
+            },
+            "publication": {
+                "countries": [
+                    "FR"
+                ],
+                "release_notes": "Initial release for France with new-build home search, home and development details, comparison, availability checks and optional adviser contact requests.",
+                "translations": {
+                    "fr-FR": {
+                        "subtitle": "Logements neufs en France",
+                        "description": "Recherchez et comparez les logements neufs et terrains de notre catalogue en France. Filtrez par lieu, budget, surface, extérieur ou date de livraison prévue. Consultez les fiches des logements et des résidences, vérifiez la dernière disponibilité communiquée par le promoteur et demandez, si vous le souhaitez, à être recontacté par un conseiller."
+                    }
+                }
+            }
+        }
+    }
+}

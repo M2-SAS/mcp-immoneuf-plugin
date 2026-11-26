@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "m2immoneuf": {
+      "type": "http",
+      "url": "https://app-promoters.m2agent.co/mcp"
+    }
+  }
+}
